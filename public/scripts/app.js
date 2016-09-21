@@ -3,7 +3,7 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-var tweetData = {
+tweetData = {
   "user": {
     "name": "Newton",
     "avatars": {
@@ -19,23 +19,24 @@ var tweetData = {
   "created_at": 1461116232227
 }
 
+
 $(function() {
   $("form input").on("click", function(e) {
     e.preventDefault();
-    var $tweet = $("<article>").addClass("tweet");
-    var $header = $("<header>");
-    var $img = $("<img>").attr("src", tweetData.user.avatars.small).addClass("avatarPics");
-    var $handle = $("<p>").addClass("handle").text(tweetData.user.handle);
-    var $name = $("<p>").addClass("name").text(tweetData.user.name);
+    let $tweet = $("<article>").addClass("tweet");
+    let $header = $("<header>");
+    let $img = $("<img>").attr("src", tweetData.user.avatars.small).addClass("avatarPics");
+    let $handle = $("<p>").addClass("handle").text(tweetData.user.handle);
+    let $name = $("<p>").addClass("name").text(tweetData.user.name);
     $header.append($img).append($handle).append($name);
 
-    var $tweetContainer = $("<div>").addClass("actualTweet");
-    var $realTweet = $("<p>").text(tweetData.content.text);
+    let $tweetContainer = $("<div>").addClass("actualTweet");
+    let $realTweet = $("<p>").text(tweetData.content.text);
 
     $tweetContainer.append($realTweet);
 
-    var $footer = $("<footer>");
-    var $date = $("<p>").text(tweetData.created_at);
+    let $footer = $("<footer>");
+    let $date = $("<p>").text(tweetData.created_at);
 
     $footer.append($date);
 
