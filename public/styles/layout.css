@@ -48,6 +48,69 @@ h2 {
   border-bottom: 2px solid black;
 }
 
+article {
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 1px solid #ffcccc;
+  border-radius: 10px;
+}
+
+article:hover > header {
+  background-color: #9494b8;
+  font-weight: bold;
+}
+
+div.actualTweet:hover {
+  font-weight: bold;
+}
+
+header {
+  border: 1px solid #ffcccc;
+  height: 60px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgba(219,217,217,0.6);
+}
+
+img.avatarPics {
+  margin-top: 7px;
+  margin-left: 5px;
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+
+p.handle {
+  margin-top: 20px;
+  float: right;
+  margin-right: 1em;
+}
+
+p.name {
+  margin-left: 4em;
+  font-size: 18px;
+}
+
+div.actualTweet {
+  height: auto;
+}
+
+div.actualTweet p {
+  margin-left: 1em;
+}
+
+footer {
+  height: 25px;
+  border-top: 1px solid #f0f5f5;
+  margin-bottom: 4px;
+}
+
+footer p {
+  margin: 4px auto;
+  margin-left: 1em;
+}
+
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
