@@ -3,81 +3,166 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-tweetData = {
-  "user": {
-    "name": "Newton",
-    "avatars": {
-      "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-      "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-      "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-    },
-    "handle": "@SirIsaac"
-  },
-  "content": {
-    "text": "If I have seen further it is by standing on the shoulders of giants"
-  },
-  "created_at": 1461116232227
-}
+// tweetData = {
+//   "user": {
+//     "name": "Newton",
+//     "avatars": {
+//       "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
+//       "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
+//       "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
+//     },
+//     "handle": "@SirIsaac"
+//   },
+//   "content": {
+//     "text": "If I have seen further it is by standing on the shoulders of giants"
+//   },
+//   "created_at": 1461116232227
+// }
 
-$(function focusTextBox() {
-  $("button").on("click", function(e) {
-    e.preventDefault();
-    $("section.new-tweet").slideToggle("slow", function() {
-       $("textarea").focus();
-       $("section.allTweets");
+
+
+
+
+$(function () {
+  function insertFirstTweet() {
+    $.ajax ({
+      method: "GET",
+      url: "/tweets",
+      dataType: "json",
+      success: function(newTweetArray) {
+        var myElement = createTweetElement(newTweetArray[0]);
+        myElement.insertBefore($(".allTweets").find( '>:first-child'));
+      }
     });
-  });
-});
+  }
+
+  function registerFocusTextBox() {
+    $("button").on("click", function(e) {
+      e.preventDefault();
+      $("section.new-tweet").slideToggle("slow", function() {
+         $("textarea").focus();
+         $("section.allTweets");
+      });
+    });
+  }
+
+   function verifyLength(leTweet) {
+      console.log( "leTweet:", leTweet);
+      const counter = $(".counter");
+
+      if (leTweet.val().length < 1) {
+        alert("You can't hum about nothing...!");
+        return false;
+      } else if (leTweet.val().length > 140) {
+        alert("That is far more than 140 characters");
+        return false;
+      }
+
+      return true;
+    }
+
+  function registerMakeTweet() {
+    console.log( "makeTweet");
+    var $button = $("form");
+
+    $button.on("submit", function (event) {
+      event.preventDefault();
+
+      const theForm = $(this);
+      let theTweet = $('#theTweet');
+
+      if ( !verifyLength(theTweet) ) {
+        console.log('early exit');
+        return;
+      }
+
+      console.log("Submitted, performing AJAX req");
+      $.ajax({
+        url: theForm.attr("action"),
+        method: theForm.attr("method"),
+        data: theForm.serialize(),
+        dataType: 'json',
+        success: function(data) {
+          console.log('success :D');
+          theForm.find('textarea').val('');
+          insertFirstTweet();
+        }
+      })
+
+    })
+  }
+
+  function reLoadAllTweets(){
+    $.ajax({
+      datatype: "json",
+      url: "/tweets",
+      method: "GET",
+      success: function (showTweets) {
+        renderTweets(showTweets);
+      }
+    });
+  }
+ function loadTweets() {
+  // const $button = $("form");
+  // $button.on("click", function (e) {
+      // e.preventDefault();
+      $.ajax({
+        datatype: "json",
+        url: "/tweets",
+        method: "GET",
+        success: function (showTweets) {
+          renderTweets(showTweets);
+          registerFocusTextBox();
+          registerMakeTweet();
+        },
+      });
+  }
 
 
-$(function renderTweets() {
-  $("form input").on("click", function(e) {
-    e.preventDefault();
+  loadTweets();
 
-    const counter = $(".counter");
+function createTweetElement(tweetObject) {
+  // $("form input").on("click", function(e) {
+    // e.preventDefault();
 
-    if (counter.text() < 0) {
-      alert("Your tweet is too long...");
-    } else if (counter.text() == 140) {
-      alert("You can't hum about nothing!");
-    } else {
+      console.log(tweetObject);
+
       let $tweet = $("<article>").addClass("tweet");
       let $header = $("<header>");
-      let $img = $("<img>").attr("src", tweetData.user.avatars.small).addClass("avatarPics");
-      let $handle = $("<p>").addClass("handle").text(tweetData.user.handle);
-      let $name = $("<p>").addClass("name").text(tweetData.user.name);
+      let $img = $("<img>").attr("src", tweetObject.user.avatars.small).addClass("avatarPics");
+      let $handle = $("<p>").addClass("handle").text(tweetObject.user.handle);
+      let $name = $("<p>").addClass("name").text(tweetObject.user.name);
       $header.append($img).append($handle).append($name);
 
       let $tweetContainer = $("<div>").addClass("actualTweet");
-      let $realTweet = $("<p>").text(document.getElementById('theTweet').value);
+      let $realTweet = $("<p>").text(tweetObject.content.text);
 
       $tweetContainer.append($realTweet);
 
       let $footer = $("<footer>");
-      let $date = $("<p>").text(tweetData.created_at);
+      let $date = $("<p>").text(tweetObject.created_at);
 
       $footer.append($date);
 
       $tweet.append($header).append($tweetContainer).append($footer);
 
-      $('.allTweets').prepend($tweet);
+      //$('.allTweets').prepend($tweet);
 
-      $("form textarea").val("");
+      //$("form textarea").val("");
+      return $tweet;
+    }//);
+
+
+
+
+  function renderTweets(tweets) {
+    for (let i = 0; i < tweets.length; i++) {
+      myElement = createTweetElement( tweets[i] );
+      $('.allTweets').append(myElement);
     }
-  });
+  }
 
-  $(function loadTweets() {
-    const $button = $("input");
-    $button.on("click", function (e) {
-      e.preventDefault();
-      $.ajax({
-        url: "/tweets",
-        method: "GET",
-        success: function (showTweets) {
-          console.log("Success: ", showTweets);
-        },
-        datatype: "JSON"
-      });
-    });
-  });
 });
+
+
+

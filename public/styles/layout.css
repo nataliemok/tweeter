@@ -23,7 +23,7 @@ body {
 
 main.container {
   width: 675px;
-  height: 100em;
+  height: 100%;
   margin: 0px auto;
   background-color: white;
   margin-top: 80px;
@@ -60,6 +60,10 @@ article {
 article:hover > header {
   background-color: #9494b8;
   font-weight: bold;
+}
+
+div.actualTweet {
+  overflow-wrap: break-word;
 }
 
 div.actualTweet:hover {
