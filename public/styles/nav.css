@@ -22,3 +22,26 @@
   float:                left;
   line-height:          2.5;
 }
+
+#nav-bar #compose {
+  float: right;
+  margin-top: 20px;
+  font-family: 'Roboto Condensed', sans-serif;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 16px;
+  background-color: #d9d9d9;
+  padding: 10px 20px 10px 20px;
+  cursor: pointer;
+}
+#nav-bar #compose:hover {
+ background: #919191;
+  background-image: -webkit-linear-gradient(top, #919191, #565757);
+  background-image: -moz-linear-gradient(top, #919191, #565757);
+  background-image: -ms-linear-gradient(top, #919191, #565757);
+  background-image: -o-linear-gradient(top, #919191, #565757);
+  background-image: linear-gradient(to bottom, #919191, #565757);
+}
+

@@ -4,11 +4,17 @@ section.new-tweet {
   margin: 0 auto;
   margin-left: 2em;
   margin-right:2em;
-  margin-top: 7em;
+  margin-top: 2em;
   border: 1px solid #ffcccc;
   border-radius: 12px;
   background-color: rgba(219,217,217,0.6);
+  padding: 4px;
 }
+
+section.onToggle {
+  margin-top: 7em;
+}
+
 
 textarea {
   font-size: 20px;
@@ -17,3 +23,4 @@ textarea {
 span.counter {
   float: right;
 }
+
