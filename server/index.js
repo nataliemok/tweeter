@@ -18,5 +18,5 @@ db.connect((dbInstance) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+  console.log("Tweeter is listening on port " + PORT);
 });

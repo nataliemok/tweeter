@@ -9,8 +9,6 @@ module.exports = {
 
     let dbInstance;
 
-    console.log(`Connecting to mongodb @ ${MONGODB_URI}`);
-
     MongoClient.connect(MONGODB_URI, (err, db) => {
       if (err) throw err;
       console.log("Successfully connected to DB: " + MONGODB_URI);

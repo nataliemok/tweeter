@@ -1,15 +1,16 @@
 $(function () {
 
-  let ogNum = $(".counter").text();
+  let originalNumber = $(".counter").text();
 
   $(".theText").on('keyup', function() {
-    let newNum = ogNum - $(".theText").val().length;
+    let newNumber = originalNumber - $(".theText").val().length;
 
-    if (newNum < 0) {
+    if (newNumber < 0) {
       $(".counter").css({"color" : "red"});
     } else {
       $(".counter").css({"color" : "black"});
     }
-    $(".counter").text(newNum);
+    $(".counter").text(newNumber);
   });
+
 });

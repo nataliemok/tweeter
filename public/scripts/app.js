@@ -1,7 +1,5 @@
 // Client side logic
 
-// on document ready
-
 $(function () {
 
   // Adds new tweet to top
@@ -17,29 +15,27 @@ $(function () {
     });
   }
 
-  // compose button at top
+  // Compose button at top
   function registerFocusTextBox() {
     $("button").on("click", function(e) {
       e.preventDefault();
       $("section.new-tweet").slideToggle("slow", function() {
          $("textarea").focus();
-         $("section.allTweets");
       });
     });
   }
 
   // verifies that the tweet is not empty, nor over 140 characters
-  function verifyLength(leTweet) {
-    console.log( "leTweet:", leTweet);
+  function verifyLength(currentTweet) {
     const counter = $(".counter");
 
-    if (leTweet.val().length < 1) {
+    if (currentTweet.val().length < 1) {
       alert("You can't hum about nothing...!");
       return false;
-    } else if (leTweet.val().length > 140) {
+    } else if (currentTweet.val().length > 140) {
       alert("That is far more than 140 characters");
       return false;
-    } else if (leTweet.val().match(/^\s*$/)) {
+    } else if (currentTweet.val().match(/^\s*$/)) {
       alert("You can't submit a blank tweet..");
       return false;
     }
@@ -58,18 +54,16 @@ $(function () {
       let theTweet = $('#theTweet');
 
       if ( !verifyLength(theTweet) ) {
-        console.log('early exit');
         return;
       }
 
-      console.log("Submitted, performing AJAX req");
+
       $.ajax({
         url: theForm.attr("action"),
         method: theForm.attr("method"),
         data: theForm.serialize(),
         dataType: 'json',
         success: function(data) {
-          console.log('success :D');
           theForm.find('textarea').val('');
           insertFirstTweet();
         }
@@ -77,7 +71,7 @@ $(function () {
     });
   }
 
-  function reLoadAllTweets(){
+  function reloadAllTweets(){
     $.ajax({
       datatype: "json",
       url: "/tweets",
@@ -118,10 +112,6 @@ $(function () {
       var day = new Date();
       return day;
     }
-
-    console.log(tweetObject);
-    // let date = new date(tweetObject.created_at);
-    // console.log(date);
 
     // tweet container, handle, name, and avatar picture.
     let $tweet = $("<article>").addClass("tweet");
